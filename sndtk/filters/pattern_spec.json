@@ -22,6 +22,47 @@
           "description": "Initializes successfully with single pattern (boundary value)."
         }
       ]
+    },
+    {
+      "identifier": "PatternFilter::is_ignored",
+      "scenarios": [
+        {
+          "testname": "test__PatternFilter__is_ignored__returns_false_when_patterns_is_empty",
+          "description": "Returns False when patterns is empty (boundary value)."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__returns_true_when_path_matches_single_pattern",
+          "description": "Returns True when path matches single pattern (boundary value)."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__returns_false_when_path_does_not_match_single_pattern",
+          "description": "Returns False when path does not match single pattern (boundary value)."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__returns_true_when_path_matches_pattern",
+          "description": "Returns True when path matches pattern."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__returns_false_when_path_does_not_match_any_pattern",
+          "description": "Returns False when path does not match any pattern."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__returns_true_when_path_matches_first_pattern",
+          "description": "Returns True when path matches the first pattern in patterns."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__returns_true_when_path_matches_last_pattern",
+          "description": "Returns True when path matches the last pattern in patterns."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__handles_wildcard_patterns",
+          "description": "Handles wildcard patterns correctly (* and ?)."
+        },
+        {
+          "testname": "test__PatternFilter__is_ignored__works_with_relative_and_absolute_paths",
+          "description": "Works correctly with both relative and absolute paths."
+        }
+      ]
     }
   ]
 }
