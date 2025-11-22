@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from pathlib import Path
 
 from sndtk.parsers.types import Function
 from sndtk.spec import FunctionSpec
@@ -16,12 +17,16 @@ class FunctionReport:
         cls,
         function: Function,
         spec_dict: dict[str, FunctionSpec],
+        file_testpath: Path | None,
     ) -> FunctionReport:
         function_spec = spec_dict.get(function.identifier)
         if function_spec is None:
             return FunctionReport(function=function, scenarios=[])
+        function_testpath = function_spec.testpath or file_testpath
+        if function_testpath is None:
+            return FunctionReport(function=function, scenarios=[])
         scenarios = [
-            ScenarioReport.generate(scenario, function_spec.testpath)
+            ScenarioReport.generate(scenario, function_testpath)
             for scenario in function_spec.scenarios
         ]
         return FunctionReport(function=function, scenarios=scenarios)

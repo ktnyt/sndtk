@@ -5,6 +5,6 @@ from sndtk.spec.types import StrPath
 
 
 class FunctionSpec(BaseModel):
-    testpath: StrPath
+    testpath: StrPath | None
     identifier: str
     scenarios: list[ScenarioSpec]

@@ -81,12 +81,10 @@ def main(root: Path, *, create: bool = False, first: bool = False) -> None:
                 if report.filespec is None:
                     filespec = FileSpec.create(report.filepath, function_report.function)
                 else:
-                    filespec = report.filespec.add(report.filepath, function_report.function)
+                    filespec = report.filespec.add(function_report.function)
 
-                filespec.save()
-                print(
-                    f"Created spec for {function_report.function.identifier} in {report.filepath}"
-                )
+                specpath = filespec.save()
+                print(f"Created spec for {function_report.function.identifier} in {specpath}")
                 return
         else:
             logger.info(f"Report for {report.filepath}: {report}")

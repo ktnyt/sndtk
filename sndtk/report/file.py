@@ -31,7 +31,8 @@ class FileReport:
             filespec = None
 
         spec_dict = {f.identifier: f for f in filespec.functions} if filespec else {}
-        function_reports = [FunctionReport.generate(function, spec_dict) for function in functions]
+        file_testpath = filespec.testpath if filespec and filespec.testpath else None
+        function_reports = [FunctionReport.generate(function, spec_dict, file_testpath) for function in functions]
         logger.debug(f"Generated {len(function_reports)} function reports")
         return FileReport(filepath=filepath, filespec=filespec, functions=function_reports)
 

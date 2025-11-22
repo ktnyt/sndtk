@@ -14,18 +14,20 @@ logger = logging.getLogger(__name__)
 
 class FileSpec(BaseModel):
     filepath: StrPath
+    testpath: StrPath | None = None
     functions: list[FunctionSpec]
 
     @classmethod
     def create(cls, filepath: Path, function: Function) -> FileSpec:
-        spec = cls(filepath=filepath, functions=[])
-        spec.add(filepath, function)
+        testpath = filepath.with_suffix(".test.py")
+        spec = cls(filepath=filepath, testpath=testpath, functions=[])
+        spec.add(function)
         return spec
 
-    def add(self, filepath: Path, function: Function) -> FileSpec:
+    def add(self, function: Function) -> FileSpec:
         self.functions.append(
             FunctionSpec(
-                testpath=filepath.with_suffix(".test.py"),
+                testpath=None,
                 identifier=function.identifier,
                 scenarios=[
                     ScenarioSpec(
@@ -49,9 +51,10 @@ class FileSpec(BaseModel):
             logger.debug(f"Loaded spec with {len(spec.functions)} functions")
             return spec
 
-    def save(self) -> None:
+    def save(self) -> Path:
         spec_path = self.filepath.with_suffix(".spec.yml")
         logger.info(f"Saving spec to {spec_path}")
         logger.debug(f"Spec contains {len(self.functions)} functions")
         with open(spec_path, "w") as f:
             yaml.dump(self.model_dump(), f)
+        return spec_path
