@@ -1,0 +1,43 @@
+{
+  "filepath": "sndtk/filters/config.py",
+  "testpath": "sndtk/filters/config.test.py",
+  "functions": [
+    {
+      "identifier": "ConfigFilter::__init__",
+      "scenarios": [
+        {
+          "testname": "test__ConfigFilter____init____initializes_with_default_root_path",
+          "description": "Initializes successfully with default root_path (current directory)"
+        },
+        {
+          "testname": "test__ConfigFilter____init____initializes_with_custom_root_path",
+          "description": "Initializes successfully with custom root_path"
+        },
+        {
+          "testname": "test__ConfigFilter____init____loads_exclude_patterns_from_pyproject_toml",
+          "description": "Loads exclude patterns correctly from pyproject.toml"
+        },
+        {
+          "testname": "test__ConfigFilter____init____handles_empty_exclude_patterns",
+          "description": "Handles empty exclude patterns list"
+        },
+        {
+          "testname": "test__ConfigFilter____init____handles_missing_tool_sndtk_section",
+          "description": "Handles missing [tool.sndtk] section (exclude defaults to empty list)"
+        },
+        {
+          "testname": "test__ConfigFilter____init____raises_file_not_found_error_when_pyproject_toml_not_exists",
+          "description": "Raises FileNotFoundError when pyproject.toml does not exist"
+        },
+        {
+          "testname": "test__ConfigFilter____init____raises_value_error_when_exclude_patterns_not_list",
+          "description": "Raises ValueError when exclude patterns is not a list"
+        },
+        {
+          "testname": "test__ConfigFilter____init____raises_value_error_when_invalid_toml",
+          "description": "Raises ValueError when TOML format is invalid"
+        }
+      ]
+    }
+  ]
+}
