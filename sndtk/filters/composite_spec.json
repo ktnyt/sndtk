@@ -1,0 +1,61 @@
+{
+  "filepath": "sndtk/filters/composite.py",
+  "testpath": "sndtk/filters/composite_test.py",
+  "functions": [
+    {
+      "identifier": "CompositeFileFilter::__init__",
+      "scenarios": [
+        {
+          "testname": "test__CompositeFileFilter____init____initializes_successfully_with_no_filters",
+          "description": "Initializes successfully with no filters (boundary value)"
+        },
+        {
+          "testname": "test__CompositeFileFilter____init____initializes_successfully_with_single_filter",
+          "description": "Initializes successfully with single filter (boundary value)"
+        },
+        {
+          "testname": "test__CompositeFileFilter____init____initializes_successfully_with_multiple_filters",
+          "description": "Initializes successfully with multiple filters"
+        }
+      ]
+    },
+    {
+      "identifier": "CompositeFileFilter::add",
+      "scenarios": [
+        {
+          "testname": "test__CompositeFileFilter__add__adds_filter_to_empty_list",
+          "description": "Adds filter to empty list (boundary value)"
+        },
+        {
+          "testname": "test__CompositeFileFilter__add__adds_filter_to_existing_list",
+          "description": "Adds filter to existing list"
+        },
+        {
+          "testname": "test__CompositeFileFilter__add__adds_multiple_filters_sequentially",
+          "description": "Adds multiple filters sequentially"
+        }
+      ]
+    },
+    {
+      "identifier": "CompositeFileFilter::is_ignored",
+      "scenarios": [
+        {
+          "testname": "test__CompositeFileFilter__is_ignored__returns_false_when_no_filters",
+          "description": "Returns False when no filters (boundary value)"
+        },
+        {
+          "testname": "test__CompositeFileFilter__is_ignored__returns_false_when_all_filters_return_false",
+          "description": "Returns False when all filters return False"
+        },
+        {
+          "testname": "test__CompositeFileFilter__is_ignored__returns_true_when_single_filter_returns_true",
+          "description": "Returns True when single filter returns True"
+        },
+        {
+          "testname": "test__CompositeFileFilter__is_ignored__returns_true_when_any_filter_returns_true",
+          "description": "Returns True when any filter returns True"
+        }
+      ]
+    }
+  ]
+}

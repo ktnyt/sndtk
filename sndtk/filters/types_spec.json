@@ -1,0 +1,23 @@
+{
+  "filepath": "sndtk/filters/types.py",
+  "testpath": "sndtk/filters/types_test.py",
+  "functions": [
+    {
+      "identifier": "FileFilter::is_ignored",
+      "scenarios": [
+        {
+          "testname": "test__FileFilter__is_ignored__returns_true_when_implementing_class_returns_true",
+          "description": "Returns True when implementing class returns True"
+        },
+        {
+          "testname": "test__FileFilter__is_ignored__returns_false_when_implementing_class_returns_false",
+          "description": "Returns False when implementing class returns False"
+        },
+        {
+          "testname": "test__FileFilter__is_ignored__works_with_relative_and_absolute_paths",
+          "description": "Works correctly with both relative and absolute paths"
+        }
+      ]
+    }
+  ]
+}

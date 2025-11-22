@@ -1,0 +1,56 @@
+{
+  "filepath": "sndtk/filters/gitignore.py",
+  "testpath": "sndtk/filters/gitignore_test.py",
+  "functions": [
+    {
+      "identifier": "GitignoreFilter::__init__",
+      "scenarios": [
+        {
+          "testname": "test__GitignoreFilter____init____initializes_with_default_root_path",
+          "description": "Initializes successfully with default root_path (current directory)"
+        },
+        {
+          "testname": "test__GitignoreFilter____init____initializes_with_custom_root_path",
+          "description": "Initializes successfully with custom root_path"
+        },
+        {
+          "testname": "test__GitignoreFilter____init____initializes_with_empty_gitignore",
+          "description": "Initializes successfully with empty .gitignore file (boundary value)"
+        },
+        {
+          "testname": "test__GitignoreFilter____init____raises_file_not_found_error_when_gitignore_not_exists",
+          "description": "Raises FileNotFoundError when .gitignore does not exist"
+        }
+      ]
+    },
+    {
+      "identifier": "GitignoreFilter::is_ignored",
+      "scenarios": [
+        {
+          "testname": "test__GitignoreFilter__is_ignored__returns_true_when_path_matches_pattern",
+          "description": "Returns True when path matches .gitignore pattern"
+        },
+        {
+          "testname": "test__GitignoreFilter__is_ignored__returns_false_when_path_does_not_match_pattern",
+          "description": "Returns False when path does not match any .gitignore pattern"
+        },
+        {
+          "testname": "test__GitignoreFilter__is_ignored__returns_false_when_gitignore_is_empty",
+          "description": "Returns False when .gitignore is empty (boundary value)"
+        },
+        {
+          "testname": "test__GitignoreFilter__is_ignored__returns_false_when_path_is_outside_root_path",
+          "description": "Returns False when path is outside root_path (ValueError case)"
+        },
+        {
+          "testname": "test__GitignoreFilter__is_ignored__works_with_relative_and_absolute_paths",
+          "description": "Works correctly with both relative and absolute paths"
+        },
+        {
+          "testname": "test__GitignoreFilter__is_ignored__handles_multiple_patterns",
+          "description": "Handles multiple patterns correctly"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "filepath": "sndtk/filters/exact.py",
+  "testpath": "sndtk/filters/exact_test.py",
+  "functions": [
+    {
+      "identifier": "ExactFilter::__init__",
+      "scenarios": [
+        {
+          "testname": "test__ExactFilter____init____initializes_successfully_with_relative_path",
+          "description": "Initializes successfully with relative path"
+        },
+        {
+          "testname": "test__ExactFilter____init____initializes_successfully_with_absolute_path",
+          "description": "Initializes successfully with absolute path"
+        },
+        {
+          "testname": "test__ExactFilter____init____initializes_successfully_with_nonexistent_path",
+          "description": "Initializes successfully with nonexistent path (boundary value)"
+        }
+      ]
+    },
+    {
+      "identifier": "ExactFilter::is_ignored",
+      "scenarios": [
+        {
+          "testname": "test__ExactFilter__is_ignored__returns_false_when_path_matches_filepath",
+          "description": "Returns False when path matches filepath"
+        },
+        {
+          "testname": "test__ExactFilter__is_ignored__returns_true_when_path_does_not_match_filepath",
+          "description": "Returns True when path does not match filepath"
+        }
+      ]
+    }
+  ]
+}
