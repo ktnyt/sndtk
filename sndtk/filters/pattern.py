@@ -11,7 +11,7 @@ DEFAULT_PATTENRS = [
     "**/test/*.py",
     "**/tests/*.py",
     "**/*_test.py",
-    "**/*.test.py",
+    "**/*_test.py",
     "**/conftest.py",
     ".venv/**/*.py",
 ]

@@ -1,0 +1,27 @@
+{
+  "filepath": "sndtk/filters/pattern.py",
+  "testpath": "sndtk/filters/pattern_test.py",
+  "functions": [
+    {
+      "identifier": "PatternFilter::__init__",
+      "scenarios": [
+        {
+          "testname": "test__PatternFilter____init____initializes_with_default_patterns",
+          "description": "Initializes successfully with default patterns when no patterns argument is provided."
+        },
+        {
+          "testname": "test__PatternFilter____init____initializes_with_custom_patterns",
+          "description": "Initializes successfully with custom patterns list."
+        },
+        {
+          "testname": "test__PatternFilter____init____initializes_with_empty_patterns",
+          "description": "Initializes successfully with empty patterns list (boundary value)."
+        },
+        {
+          "testname": "test__PatternFilter____init____initializes_with_single_pattern",
+          "description": "Initializes successfully with single pattern (boundary value)."
+        }
+      ]
+    }
+  ]
+}

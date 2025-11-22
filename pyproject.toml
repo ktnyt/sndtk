@@ -4,10 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = [
-    "pathspec>=0.12.1",
-    "pydantic>=2.12.4",
-]
+dependencies = ["pathspec>=0.12.1", "pydantic>=2.12.4"]
 
 [dependency-groups]
 dev = [
@@ -39,11 +36,11 @@ ignore = [
 ]
 
 [tool.sndtk]
-exclude = ["*.test.py", "conftest.py"]
+exclude = ["*_test.py", "conftest.py"]
 
 [tool.pytest.ini_options]
 testpaths = ["."]
-python_files = ["*.test.py"]
+python_files = ["*_test.py"]
 python_functions = ["test__*"]
 python_classes = ["Test*"]
 pythonpath = ["."]

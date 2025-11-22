@@ -3,7 +3,7 @@
 import sys
 from pathlib import Path
 
-# Configure pytest to use importlib mode for .test.py files
+# Configure pytest to use importlib mode for _test.py files
 # This allows pytest to properly import files with dots in their names
 import pytest
 
@@ -15,7 +15,7 @@ if str(project_root) not in sys.path:
 
 def pytest_configure(config: pytest.Config) -> None:
     """Configure pytest to use importlib import mode and ensure Python path."""
-    # Set import mode to importlib to handle .test.py files correctly
+    # Set import mode to importlib to handle _test.py files correctly
     config.option.importmode = "importlib"
     # Ensure Python path is set
     project_root = Path(config.rootdir).resolve()  # type: ignore[attr-defined]
