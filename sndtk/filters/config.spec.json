@@ -1,6 +1,6 @@
 {
   "filepath": "sndtk/filters/config.py",
-  "testpath": "sndtk/filters/config.test.py",
+  "testpath": "sndtk/filters/config_test.py",
   "functions": [
     {
       "identifier": "ConfigFilter::__init__",
@@ -19,11 +19,11 @@
         },
         {
           "testname": "test__ConfigFilter____init____handles_empty_exclude_patterns",
-          "description": "Handles empty exclude patterns list"
+          "description": "Handles empty exclude patterns list correctly"
         },
         {
           "testname": "test__ConfigFilter____init____handles_missing_tool_sndtk_section",
-          "description": "Handles missing [tool.sndtk] section (exclude defaults to empty list)"
+          "description": "Handles missing [tool.sndtk] section correctly (exclude defaults to empty list)"
         },
         {
           "testname": "test__ConfigFilter____init____raises_file_not_found_error_when_pyproject_toml_not_exists",
@@ -36,6 +36,39 @@
         {
           "testname": "test__ConfigFilter____init____raises_value_error_when_invalid_toml",
           "description": "Raises ValueError when TOML format is invalid"
+        }
+      ]
+    },
+    {
+      "identifier": "ConfigFilter::is_ignored",
+      "scenarios": [
+        {
+          "testname": "test__ConfigFilter__is_ignored__returns_false_when_exclude_patterns_is_empty",
+          "description": "Returns False when exclude_patterns is empty"
+        },
+        {
+          "testname": "test__ConfigFilter__is_ignored__returns_true_when_path_matches_pattern",
+          "description": "Returns True when path matches exclude pattern"
+        },
+        {
+          "testname": "test__ConfigFilter__is_ignored__returns_false_when_path_does_not_match_pattern",
+          "description": "Returns False when path does not match any exclude pattern"
+        },
+        {
+          "testname": "test__ConfigFilter__is_ignored__returns_true_when_path_matches_first_pattern",
+          "description": "Returns True when path matches the first pattern in exclude_patterns"
+        },
+        {
+          "testname": "test__ConfigFilter__is_ignored__returns_false_when_path_is_outside_root_path",
+          "description": "Returns False when path is outside root_path (ValueError case)"
+        },
+        {
+          "testname": "test__ConfigFilter__is_ignored__handles_wildcard_patterns",
+          "description": "Handles wildcard patterns correctly (* and ?)"
+        },
+        {
+          "testname": "test__ConfigFilter__is_ignored__works_with_relative_and_absolute_paths",
+          "description": "Works correctly with both relative and absolute paths"
         }
       ]
     }

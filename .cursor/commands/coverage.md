@@ -21,3 +21,47 @@
 
 - Describe tests in English.
 - Use table testing where applicable to reduce the number of scenarios.
+
+#### Template patterns
+
+Follow these patterns based on the test scenario type:
+
+**Success cases (normal behavior):**
+
+- `"[Action] successfully when [condition]"`
+  - Example: `"Initializes successfully with default root_path (current directory)"`
+  - Example: `"Returns True when path matches exclude pattern"`
+- `"[Action] correctly with [input/context]"`
+  - Example: `"Loads exclude patterns correctly from pyproject.toml"`
+  - Example: `"Handles wildcard patterns correctly (* and ?)"`
+
+**Return value assertions:**
+
+- `"Returns [value] when [condition]"`
+  - Example: `"Returns False when exclude_patterns is empty"`
+  - Example: `"Returns True when path matches the first pattern in exclude_patterns"`
+
+**Error/exception cases:**
+
+- `"Raises [ExceptionType] when [condition]"`
+  - Example: `"Raises FileNotFoundError when pyproject.toml does not exist"`
+  - Example: `"Raises ValueError when exclude patterns is not a list"`
+
+**Edge cases and boundary values:**
+
+- Add `(boundary value)` annotation when testing edge cases
+  - Example: `"Initializes successfully with empty patterns list (boundary value)"`
+  - Example: `"Initializes successfully with single pattern (boundary value)"`
+
+**Complex scenarios:**
+
+- For scenarios testing multiple aspects, use: `"[Action] [aspect1] and [aspect2]"`
+  - Example: `"Works correctly with both relative and absolute paths"`
+
+#### Guidelines
+
+- Start with a verb (Initializes, Returns, Raises, Handles, Works, etc.)
+- Be specific about conditions and expected outcomes
+- Use present tense
+- Keep descriptions concise but informative
+- For boundary value tests, explicitly mark with `(boundary value)`
