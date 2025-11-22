@@ -13,7 +13,7 @@
 - Run `uv run mypy`, `uv run ruff check --fix --unsafe-fixes` and `uv run ruff format` on the test file.
 - Run the tests with `uv run pytest path/to/function.py::Function::indeitifier`
 - Run `uv run python -m sndtk --target path/to/function.py::Function::identifier` to check that the target function is no longer uncovered.
-- Report and finish. DO NOT PROCEED TO DO ANY MORE WORK UNLESS EXPLICITY SPECIFIED FROM THE USRE.
+- Report and finish. DO NOT PROCEED TO DO ANY MORE WORK UNLESS EXPLICITY SPECIFIED FROM THE USER.
 
 ## Conventions
 
