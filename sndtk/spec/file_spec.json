@@ -1,0 +1,78 @@
+{
+  "filepath": "sndtk/spec/file.py",
+  "testpath": "sndtk/spec/file_test.py",
+  "functions": [
+    {
+      "identifier": "FileSpec::create",
+      "scenarios": [
+        {
+          "testname": "test__FileSpec__create__creates_spec_with_correct_testpath",
+          "description": "Creates spec correctly with correct testpath"
+        },
+        {
+          "testname": "test__FileSpec__create__creates_spec_with_function_added",
+          "description": "Creates spec correctly with function added"
+        },
+        {
+          "testname": "test__FileSpec__create__creates_spec_with_nested_path",
+          "description": "Creates spec correctly with nested path"
+        }
+      ]
+    },
+    {
+      "identifier": "FileSpec::add",
+      "scenarios": [
+        {
+          "testname": "test__FileSpec__add__adds_function_to_empty_list",
+          "description": "Adds function to empty list (boundary value)"
+        },
+        {
+          "testname": "test__FileSpec__add__adds_function_to_existing_list",
+          "description": "Adds function to existing list"
+        },
+        {
+          "testname": "test__FileSpec__add__handles_function_identifier_with_separator",
+          "description": "Handles function identifier with separator correctly"
+        },
+        {
+          "testname": "test__FileSpec__add__returns_self",
+          "description": "Returns self correctly"
+        }
+      ]
+    },
+    {
+      "identifier": "FileSpec::load",
+      "scenarios": [
+        {
+          "testname": "test__FileSpec__load__loads_spec_from_valid_json_file",
+          "description": "Loads spec correctly from valid JSON file"
+        },
+        {
+          "testname": "test__FileSpec__load__loads_spec_with_empty_functions",
+          "description": "Loads spec correctly with empty functions list (boundary value)"
+        },
+        {
+          "testname": "test__FileSpec__load__loads_spec_with_multiple_functions",
+          "description": "Loads spec correctly with multiple functions"
+        }
+      ]
+    },
+    {
+      "identifier": "FileSpec::save",
+      "scenarios": [
+        {
+          "testname": "test__FileSpec__save__saves_spec_to_json_file",
+          "description": "Saves spec correctly to JSON file"
+        },
+        {
+          "testname": "test__FileSpec__save__saves_spec_with_empty_functions",
+          "description": "Saves spec correctly with empty functions list (boundary value)"
+        },
+        {
+          "testname": "test__FileSpec__save__returns_correct_path",
+          "description": "Returns correct path after saving"
+        }
+      ]
+    }
+  ]
+}

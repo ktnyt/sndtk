@@ -1,0 +1,27 @@
+{
+  "filepath": "sndtk/spec/types.py",
+  "testpath": "sndtk/spec/types_test.py",
+  "functions": [
+    {
+      "identifier": "Identifier::from_string",
+      "scenarios": [
+        {
+          "testname": "test__Identifier__from_string__returns_none_when_string_is_empty",
+          "description": "Returns None when string is empty (boundary value)"
+        },
+        {
+          "testname": "test__Identifier__from_string__returns_identifier_with_filepath_only_when_ends_with_py",
+          "description": "Returns identifier with filepath only when string ends with .py"
+        },
+        {
+          "testname": "test__Identifier__from_string__raises_value_error_when_no_separator",
+          "description": "Raises ValueError when string contains no separator"
+        },
+        {
+          "testname": "test__Identifier__from_string__returns_identifier_with_filepath_and_function_when_contains_separator",
+          "description": "Returns identifier with filepath and function when string contains separator"
+        }
+      ]
+    }
+  ]
+}
