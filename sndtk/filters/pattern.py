@@ -3,7 +3,7 @@ from __future__ import annotations
 import fnmatch
 from pathlib import Path
 
-from sndtk.filters.types import FileFilter
+from .types import FileFilter
 
 DEFAULT_PATTENRS = [
     "**/test_*.py",

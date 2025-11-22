@@ -5,7 +5,7 @@ import logging
 import tomllib
 from pathlib import Path
 
-from sndtk.filters.types import FileFilter
+from .types import FileFilter
 
 logger = logging.getLogger(__name__)
 
