@@ -1,0 +1,94 @@
+{
+  "filepath": "sndtk/__main__.py",
+  "testpath": "sndtk/__main___test.py",
+  "functions": [
+    {
+      "identifier": "setup_logging",
+      "scenarios": [
+        {
+          "testname": "test__setup_logging__sets_warning_level_when_verbose_is_zero",
+          "description": "Sets WARNING level when verbose is zero (boundary value)"
+        },
+        {
+          "testname": "test__setup_logging__sets_info_level_when_verbose_is_one",
+          "description": "Sets INFO level when verbose is one (boundary value)"
+        },
+        {
+          "testname": "test__setup_logging__sets_debug_level_when_verbose_is_two",
+          "description": "Sets DEBUG level when verbose is two (boundary value)"
+        },
+        {
+          "testname": "test__setup_logging__sets_debug_level_when_verbose_is_greater_than_two",
+          "description": "Sets DEBUG level when verbose is greater than two"
+        }
+      ]
+    },
+    {
+      "identifier": "walk",
+      "scenarios": [
+        {
+          "testname": "test__walk__yields_no_paths_when_directory_is_empty",
+          "description": "Yields no paths when directory is empty (boundary value)"
+        },
+        {
+          "testname": "test__walk__yields_files_when_directory_contains_only_files",
+          "description": "Yields files correctly when directory contains only files"
+        },
+        {
+          "testname": "test__walk__yields_files_from_nested_directories",
+          "description": "Yields files correctly from nested directories"
+        },
+        {
+          "testname": "test__walk__yields_files_from_mixed_structure",
+          "description": "Yields files correctly from mixed file and directory structure"
+        }
+      ]
+    },
+    {
+      "identifier": "generate_reports",
+      "scenarios": [
+        {
+          "testname": "test__generate_reports__generates_reports_with_no_identifier",
+          "description": "Generates reports correctly with no identifier"
+        },
+        {
+          "testname": "test__generate_reports__generates_reports_with_identifier",
+          "description": "Generates reports correctly with identifier"
+        },
+        {
+          "testname": "test__generate_reports__filters_non_python_files",
+          "description": "Filters non-Python files correctly"
+        },
+        {
+          "testname": "test__generate_reports__generates_no_reports_when_directory_is_empty",
+          "description": "Generates no reports when directory is empty (boundary value)"
+        }
+      ]
+    },
+    {
+      "identifier": "main",
+      "scenarios": [
+        {
+          "testname": "test__main__processes_reports_when_first_is_false",
+          "description": "Processes all reports correctly when first is False"
+        },
+        {
+          "testname": "test__main__returns_first_uncovered_when_first_is_true_and_create_is_false",
+          "description": "Returns first uncovered function correctly when first is True and create is False"
+        },
+        {
+          "testname": "test__main__creates_spec_when_first_is_true_and_create_is_true_and_filespec_is_none",
+          "description": "Creates spec correctly when first is True, create is True, and filespec is None"
+        },
+        {
+          "testname": "test__main__adds_to_existing_spec_when_first_is_true_and_create_is_true_and_filespec_exists",
+          "description": "Adds to existing spec correctly when first is True, create is True, and filespec exists"
+        },
+        {
+          "testname": "test__main__logs_message_when_first_is_true_and_no_uncovered_functions",
+          "description": "Logs message correctly when first is True and no uncovered functions found (boundary value)"
+        }
+      ]
+    }
+  ]
+}
