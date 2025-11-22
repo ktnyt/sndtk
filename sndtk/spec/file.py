@@ -13,26 +13,16 @@ class FileSpec(BaseModel):
     filepath: StrPath
     functions: list[FunctionSpec]
 
-
-def to_specpath(filepath: Path) -> Path:
-    return filepath.with_suffix(".spec.yml")
-
-
-def load_filespec(filepath: Path) -> FileSpec:
-    with open(to_specpath(filepath)) as f:
-        content = yaml.load(f, Loader=yaml.SafeLoader)
-        spec = FileSpec.model_validate(content)
+    @classmethod
+    def create(cls, filepath: Path, function: Function) -> FileSpec:
+        spec = cls(filepath=filepath, functions=[])
+        spec.add(filepath, function)
         return spec
 
-
-def create_empty_filespec(filepath: Path, functions: list[Function]) -> FileSpec:
-    specpath = to_specpath(filepath)
-    testpath = filepath.with_suffix(".test.py")
-    spec = FileSpec(
-        filepath=specpath,
-        functions=[
+    def add(self, filepath: Path, function: Function) -> FileSpec:
+        self.functions.append(
             FunctionSpec(
-                testpath=testpath,
+                testpath=filepath.with_suffix(".test.py"),
                 identifier=function.identifier,
                 scenarios=[
                     ScenarioSpec(
@@ -43,11 +33,16 @@ def create_empty_filespec(filepath: Path, functions: list[Function]) -> FileSpec
                     for i in range(3)
                 ],
             )
-            for function in functions
-        ],
-    )
+        )
+        return self
 
-    with open(specpath, "w") as f:
-        yaml.dump(spec.model_dump(), f)
+    @classmethod
+    def load(cls, filepath: Path) -> FileSpec:
+        with open(filepath.with_suffix(".spec.yml")) as f:
+            content = yaml.load(f, Loader=yaml.SafeLoader)
+            spec = cls.model_validate(content)
+            return spec
 
-    return spec
+    def save(self) -> None:
+        with open(self.filepath.with_suffix(".spec.yml"), "w") as f:
+            yaml.dump(self.model_dump(), f)
