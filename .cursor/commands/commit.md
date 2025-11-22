@@ -5,7 +5,7 @@
 - Run `git status`
 - Run `git diff --cached`
 - Run `uv run ruff check --fix`
-- Run `uv run format`
+- Run `uv run ruff format`
 - Run `uv run mypy`
 - Run `git add` to necessary files
 - Run `git commit`
