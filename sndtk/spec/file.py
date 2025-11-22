@@ -56,5 +56,5 @@ class FileSpec(BaseModel):
         logger.info(f"Saving spec to {spec_path}")
         logger.debug(f"Spec contains {len(self.functions)} functions")
         with open(spec_path, "w") as f:
-            yaml.dump(self.model_dump(), f)
+            yaml.dump(self.model_dump(exclude_none=True), f)
         return spec_path
