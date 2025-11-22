@@ -6,7 +6,7 @@
 - Run `git diff --cached`
 - Run `uv run ruff check --fix`
 - Run `uv run ruff format`
-- Run `uv run mypy`
+- Run `uv run mypy sndtk`
 - Run `git add` to necessary files
 - Run `git commit`
 
