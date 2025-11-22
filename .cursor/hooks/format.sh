@@ -3,8 +3,6 @@
 # stdinからJSONを受け取る
 json_input=$(cat)
 
-echo json_input: $json_input
-
 # jqを使ってfile_pathを取得
 file_path=$(echo "$json_input" | jq -r '.file_path')
 
