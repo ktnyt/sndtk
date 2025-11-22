@@ -24,9 +24,9 @@ class ConfigFilter(FileFilter):
             with open(self.pyproject_path, "rb") as f:
                 data = tomllib.load(f)
 
-            # [tool.coverage-checker.exclude] を取得
+            # [tool.sndtk.exclude] を取得
             tool_config = data.get("tool", {})
-            coverage_config = tool_config.get("coverage-checker", {})
+            coverage_config = tool_config.get("sndtk", {})
             self.exclude_patterns = coverage_config.get("exclude", [])
             if not isinstance(self.exclude_patterns, list):
                 raise ValueError("exclude_patterns must be a list")
