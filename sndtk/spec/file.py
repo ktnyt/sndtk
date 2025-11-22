@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 
 import yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from sndtk.parsers.types import Function
 from sndtk.spec.function import FunctionSpec
@@ -32,8 +32,8 @@ class FileSpec(BaseModel):
                 scenarios=[
                     ScenarioSpec(
                         testpath=None,
-                        testname=f"{function.identifier.replace('::', '__')}__scenario{i}",
-                        description=f"Scenario {i}",
+                        testname=f"{function.identifier.replace('::', '__')}__placeholder_scenario{i}",
+                        description=f"Placeholder scenario {i} (These scenarios are just a placeholder. Replace them with actual scenarios with sensible names and description. You do not have to limit the number of scenarios: use as many as is necessary to cover the function.)",
                     )
                     for i in range(3)
                 ],
