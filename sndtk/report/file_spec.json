@@ -1,0 +1,82 @@
+{
+  "filepath": "sndtk/report/file.py",
+  "testpath": "sndtk/report/file_test.py",
+  "functions": [
+    {
+      "identifier": "FileReport::generate",
+      "scenarios": [
+        {
+          "testname": "test__FileReport__generate__generates_report_with_no_identifier",
+          "description": "Generates report correctly with no identifier"
+        },
+        {
+          "testname": "test__FileReport__generate__generates_report_with_file_identifier",
+          "description": "Generates report correctly with file identifier"
+        },
+        {
+          "testname": "test__FileReport__generate__generates_report_with_function_identifier",
+          "description": "Generates report correctly with function identifier"
+        },
+        {
+          "testname": "test__FileReport__generate__generates_report_without_spec_file",
+          "description": "Generates report correctly without spec file"
+        },
+        {
+          "testname": "test__FileReport__generate__generates_report_with_empty_file",
+          "description": "Generates report correctly with empty file (boundary value)"
+        }
+      ]
+    },
+    {
+      "identifier": "FileReport::get_first_uncovered_function",
+      "scenarios": [
+        {
+          "testname": "test__FileReport__get_first_uncovered_function__returns_none_when_empty",
+          "description": "Returns None when functions list is empty (boundary value)"
+        },
+        {
+          "testname": "test__FileReport__get_first_uncovered_function__returns_first_uncovered_function",
+          "description": "Returns first uncovered function correctly"
+        },
+        {
+          "testname": "test__FileReport__get_first_uncovered_function__returns_none_when_all_covered",
+          "description": "Returns None when all functions are covered"
+        }
+      ]
+    },
+    {
+      "identifier": "FileReport::covered",
+      "scenarios": [
+        {
+          "testname": "test__FileReport__covered__returns_true_when_empty",
+          "description": "Returns True when functions list is empty (boundary value)"
+        },
+        {
+          "testname": "test__FileReport__covered__returns_true_when_all_covered",
+          "description": "Returns True when all functions are covered"
+        },
+        {
+          "testname": "test__FileReport__covered__returns_false_when_some_uncovered",
+          "description": "Returns False when some functions are uncovered"
+        }
+      ]
+    },
+    {
+      "identifier": "FileReport::__str__",
+      "scenarios": [
+        {
+          "testname": "test__FileReport____str____returns_emoji_when_empty",
+          "description": "Returns emoji string when functions list is empty (boundary value)"
+        },
+        {
+          "testname": "test__FileReport____str____returns_checkmark_when_covered",
+          "description": "Returns checkmark string when all functions are covered"
+        },
+        {
+          "testname": "test__FileReport____str____returns_cross_with_reports_when_uncovered",
+          "description": "Returns cross string with function reports when uncovered"
+        }
+      ]
+    }
+  ]
+}

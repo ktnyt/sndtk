@@ -1,0 +1,40 @@
+{
+  "filepath": "sndtk/report/scenario.py",
+  "testpath": "sndtk/report/scenario_test.py",
+  "functions": [
+    {
+      "identifier": "ScenarioReport::generate",
+      "scenarios": [
+        {
+          "testname": "test__ScenarioReport__generate__returns_report_with_reason_when_test_file_not_found",
+          "description": "Returns report with reason when test file not found"
+        },
+        {
+          "testname": "test__ScenarioReport__generate__returns_report_with_no_reason_when_function_found",
+          "description": "Returns report with no reason when function found"
+        },
+        {
+          "testname": "test__ScenarioReport__generate__returns_report_with_reason_when_function_not_found",
+          "description": "Returns report with reason when function not found"
+        },
+        {
+          "testname": "test__ScenarioReport__generate__uses_scenario_testpath_when_provided",
+          "description": "Uses scenario testpath when provided"
+        }
+      ]
+    },
+    {
+      "identifier": "ScenarioReport::__str__",
+      "scenarios": [
+        {
+          "testname": "test__ScenarioReport____str____returns_checkmark_when_reason_is_none",
+          "description": "Returns checkmark string when reason is None (boundary value)"
+        },
+        {
+          "testname": "test__ScenarioReport____str____returns_cross_with_reason_when_reason_exists",
+          "description": "Returns cross string with reason when reason exists"
+        }
+      ]
+    }
+  ]
+}
