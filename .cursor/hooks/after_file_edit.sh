@@ -33,3 +33,5 @@ if [[ "$file_path" == *.py ]]; then
         exit 1
     fi
 fi
+
+exit 0

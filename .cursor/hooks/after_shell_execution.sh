@@ -16,3 +16,4 @@ fi
 #     cat .cursor/rules/commit.md
 # fi
 
+exit 0
