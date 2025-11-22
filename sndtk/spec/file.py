@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 import yaml
@@ -7,6 +8,8 @@ from sndtk.parsers.types import Function
 from sndtk.spec.function import FunctionSpec
 from sndtk.spec.scenario import ScenarioSpec
 from sndtk.spec.types import StrPath
+
+logger = logging.getLogger(__name__)
 
 
 class FileSpec(BaseModel):
@@ -38,11 +41,17 @@ class FileSpec(BaseModel):
 
     @classmethod
     def load(cls, filepath: Path) -> FileSpec:
-        with open(filepath.with_suffix(".spec.yml")) as f:
+        spec_path = filepath.with_suffix(".spec.yml")
+        logger.debug(f"Loading spec from {spec_path}")
+        with open(spec_path) as f:
             content = yaml.load(f, Loader=yaml.SafeLoader)
             spec = cls.model_validate(content)
+            logger.debug(f"Loaded spec with {len(spec.functions)} functions")
             return spec
 
     def save(self) -> None:
-        with open(self.filepath.with_suffix(".spec.yml"), "w") as f:
+        spec_path = self.filepath.with_suffix(".spec.yml")
+        logger.info(f"Saving spec to {spec_path}")
+        logger.debug(f"Spec contains {len(self.functions)} functions")
+        with open(spec_path, "w") as f:
             yaml.dump(self.model_dump(), f)

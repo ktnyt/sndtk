@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import ast
+import logging
 from collections.abc import Generator
 from pathlib import Path
 
 from sndtk.parsers.types import Function
+
+logger = logging.getLogger(__name__)
 
 
 def handle_function(
@@ -50,8 +53,13 @@ class PythonParser:
         Returns:
             ast.Module: 解析結果のASTモジュール
         """
+        logger.debug(f"Parsing Python file: {filepath}")
         with open(filepath) as f:
             source_code = f.read()
 
         tree = ast.parse(source_code, filename=str(filepath))
-        yield from search(tree, filepath)
+        function_count = 0
+        for function in search(tree, filepath):
+            function_count += 1
+            yield function
+        logger.debug(f"Parsed {function_count} functions from {filepath}")

@@ -1,3 +1,4 @@
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -5,6 +6,8 @@ from sndtk.parsers.python import PythonParser
 from sndtk.spec import FileSpec
 
 from .function import FunctionReport
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -15,16 +18,21 @@ class FileReport:
 
     @classmethod
     def generate(cls, filepath: Path) -> FileReport:
+        logger.debug(f"Generating report for {filepath}")
         parser = PythonParser()
         functions = list(parser.parse(filepath))
+        logger.debug(f"Parsed {len(functions)} functions from {filepath}")
 
         try:
             filespec = FileSpec.load(filepath)
+            logger.debug(f"Loaded spec file for {filepath}")
         except FileNotFoundError:
+            logger.debug(f"No spec file found for {filepath}")
             filespec = None
 
         spec_dict = {f.identifier: f for f in filespec.functions} if filespec else {}
         function_reports = [FunctionReport.generate(function, spec_dict) for function in functions]
+        logger.debug(f"Generated {len(function_reports)} function reports")
         return FileReport(filepath=filepath, filespec=filespec, functions=function_reports)
 
     def get_first_uncovered_function(self) -> FunctionReport | None:
