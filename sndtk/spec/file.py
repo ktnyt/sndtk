@@ -1,7 +1,7 @@
+import json
 import logging
 from pathlib import Path
 
-import yaml
 from pydantic import BaseModel
 
 from sndtk.parsers.types import Function
@@ -43,18 +43,18 @@ class FileSpec(BaseModel):
 
     @classmethod
     def load(cls, filepath: Path) -> FileSpec:
-        spec_path = filepath.with_suffix(".spec.yml")
+        spec_path = filepath.with_suffix(".spec.json")
         logger.debug(f"Loading spec from {spec_path}")
-        with open(spec_path) as f:
-            content = yaml.load(f, Loader=yaml.SafeLoader)
+        with open(spec_path, "rb") as f:
+            content = json.load(f)
             spec = cls.model_validate(content)
             logger.debug(f"Loaded spec with {len(spec.functions)} functions")
             return spec
 
     def save(self) -> Path:
-        spec_path = self.filepath.with_suffix(".spec.yml")
+        spec_path = self.filepath.with_suffix(".spec.json")
         logger.info(f"Saving spec to {spec_path}")
         logger.debug(f"Spec contains {len(self.functions)} functions")
         with open(spec_path, "w") as f:
-            yaml.dump(self.model_dump(exclude_none=True), f)
+            json.dump(self.model_dump(exclude_none=True), f, indent=2)
         return spec_path
