@@ -1,0 +1,65 @@
+{
+  "filepath": "sndtk/parsers/python.py",
+  "testpath": "sndtk/parsers/python_test.py",
+  "functions": [
+    {
+      "identifier": "handle_function",
+      "scenarios": [
+        {
+          "testname": "test__handle_function__yields_function_with_empty_context",
+          "description": "Yields function correctly with empty context (boundary value)"
+        },
+        {
+          "testname": "test__handle_function__yields_function_with_context",
+          "description": "Yields function correctly with context"
+        },
+        {
+          "testname": "test__handle_function__processes_nested_functions",
+          "description": "Processes nested functions correctly"
+        }
+      ]
+    },
+    {
+      "identifier": "search",
+      "scenarios": [
+        {
+          "testname": "test__search__processes_function_def_node",
+          "description": "Processes FunctionDef node correctly"
+        },
+        {
+          "testname": "test__search__processes_class_def_node",
+          "description": "Processes ClassDef node correctly"
+        },
+        {
+          "testname": "test__search__processes_other_node_types",
+          "description": "Processes other node types correctly (boundary value)"
+        },
+        {
+          "testname": "test__search__processes_with_empty_context",
+          "description": "Processes correctly with empty context (boundary value)"
+        }
+      ]
+    },
+    {
+      "identifier": "PythonParser::parse",
+      "scenarios": [
+        {
+          "testname": "test__PythonParser__parse__parses_empty_file",
+          "description": "Parses empty file correctly (boundary value)"
+        },
+        {
+          "testname": "test__PythonParser__parse__parses_file_with_single_function",
+          "description": "Parses file with single function correctly (boundary value)"
+        },
+        {
+          "testname": "test__PythonParser__parse__parses_file_with_multiple_functions",
+          "description": "Parses file with multiple functions correctly"
+        },
+        {
+          "testname": "test__PythonParser__parse__parses_file_with_class_methods",
+          "description": "Parses file with class methods correctly"
+        }
+      ]
+    }
+  ]
+}
