@@ -3,17 +3,10 @@
   "hooks": {
     "afterFileEdit": [
       {
-        "command": "./hooks/after_file_edit.sh"
-      }
-    ],
-    "afterShellExecution": [
+        "command": "./.cursor/hooks/format.sh"
+      },
       {
-        "command": "./hooks/after_shell_execution.sh"
-      }
-    ],
-    "stop": [
-      {
-        "command": "basename $(pwd) | xargs -I{} osascript -e 'display notification \"{} Finished Working\" sound name \"Crystal\"'"
+        "command": "./.cursor/hooks/lint_fix.sh"
       }
     ]
   }
