@@ -4,6 +4,7 @@ from pathlib import Path
 
 from sndtk.parsers.python import PythonParser
 from sndtk.spec import FileSpec
+from sndtk.spec.types import Identifier
 
 from .function import FunctionReport
 
@@ -17,7 +18,7 @@ class FileReport:
     functions: list[FunctionReport]
 
     @classmethod
-    def generate(cls, filepath: Path) -> FileReport:
+    def generate(cls, filepath: Path, identifier: Identifier | None) -> FileReport:
         logger.debug(f"Generating report for {filepath}")
         parser = PythonParser()
         functions = list(parser.parse(filepath))
@@ -32,7 +33,13 @@ class FileReport:
 
         spec_dict = {f.identifier: f for f in filespec.functions} if filespec else {}
         file_testpath = filespec.testpath if filespec and filespec.testpath else None
-        function_reports = [FunctionReport.generate(function, spec_dict, file_testpath) for function in functions]
+        function_reports = [
+            FunctionReport.generate(function, spec_dict, file_testpath)
+            for function in functions
+            if identifier is None
+            or identifier.function_identifier == ""
+            or function.identifier == identifier.function_identifier
+        ]
         logger.debug(f"Generated {len(function_reports)} function reports")
         return FileReport(filepath=filepath, filespec=filespec, functions=function_reports)
 

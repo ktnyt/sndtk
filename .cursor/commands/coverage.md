@@ -11,4 +11,12 @@
 - Overwrite the scenario defaults.
 - Implement the test scenarios.
 - Run `uv run mypy`, `uv run ruff check --fix --unsafe-fixes` and `uv run ruff format` on the test file.
-- Run `uv run python -m sndtk --first` again to check that the target function is no longer uncovered.
+- Run `uv run python -m sndtk --target path/to/function.py::Function::identifier` to check that the target function is no longer uncovered.
+- Report and finish. DO NOT PROCEED TO DO ANY MORE WORK UNLESS EXPLICITY SPECIFIED FROM THE USRE.
+
+## Conventions
+
+### Test description
+
+- Describe tests in English.
+- Use table testing where applicable to reduce the number of scenarios.

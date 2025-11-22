@@ -32,7 +32,7 @@ class FileSpec(BaseModel):
                 scenarios=[
                     ScenarioSpec(
                         testpath=None,
-                        testname=f"{function.identifier.replace('::', '__')}__placeholder_scenario{i}",
+                        testname=f"test__{function.identifier.replace('::', '__')}__placeholder_scenario{i}",
                         description=f"Placeholder scenario {i} (These scenarios are just a placeholder. Replace them with actual scenarios with sensible names and description. You do not have to limit the number of scenarios: use as many as is necessary to cover the function.)",
                     )
                     for i in range(3)

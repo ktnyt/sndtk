@@ -40,11 +40,11 @@ class FunctionReport:
     def __str__(self) -> str:
         total = len(self.scenarios)
         if total == 0:
-            return f"⚠️ {self.function.name}: No scenarios defined"
+            return f"⚠️ {self.function.identifier}: No scenarios defined"
 
         covered = len([scenario for scenario in self.scenarios if scenario.reason is None])
         if covered == total:
-            return f"✅ {self.function.name}"
+            return f"✅ {self.function.identifier}"
 
         scenario_report = "\n".join([f"    {scenario}" for scenario in self.scenarios])
-        return f"❌ {self.function.name} ({covered / total:.2%}):\n{scenario_report}"
+        return f"❌ {self.function.identifier} ({covered / total:.2%}):\n{scenario_report}"
