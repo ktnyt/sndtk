@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 
 import yaml
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from sndtk.parsers.types import Function
 from sndtk.spec.function import FunctionSpec
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class FileSpec(BaseModel):
     filepath: StrPath
-    testpath: StrPath | None = None
+    testpath: StrPath
     functions: list[FunctionSpec]
 
     @classmethod
