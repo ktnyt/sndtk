@@ -1,0 +1,59 @@
+from dataclasses import dataclass
+from pathlib import Path
+
+from sndtk.parsers.python import PythonParser
+from sndtk.spec import FileSpec, load_filespec
+
+from .function import FunctionReport
+
+
+@dataclass
+class FileReport:
+    filepath: Path
+    filespec: FileSpec
+    functions: list[FunctionReport]
+
+    @classmethod
+    def generate(cls, filepath: Path) -> FileReport:
+        parser = PythonParser()
+        functions = list(parser.parse(filepath))
+
+        try:
+            filespec = load_filespec(filepath)
+        except FileNotFoundError:
+            filespec = FileSpec(filepath=filepath.with_suffix(".spec.yml"), functions=[])
+
+        spec_dict = {f.identifier: f for f in filespec.functions}
+        function_reports = [FunctionReport.generate(function, spec_dict) for function in functions]
+        return FileReport(filepath=filepath, filespec=filespec, functions=function_reports)
+
+    @property
+    def first_uncovered(self) -> FileReport | None:
+        if len(self.functions) == 0:
+            return None
+        first_uncovered = next(
+            (function for function in self.functions if not function.covered), None
+        )
+        if first_uncovered is None:
+            return None
+        return FileReport(
+            filepath=self.filepath,
+            filespec=self.filespec,
+            functions=[first_uncovered],
+        )
+
+    @property
+    def covered(self) -> bool:
+        if len(self.functions) == 0:
+            return True
+        return all(function.covered for function in self.functions)
+
+    def __str__(self) -> str:
+        if len(self.functions) == 0:
+            return f"🪽 {self.filepath}"
+
+        if self.covered:
+            return f"✅ {self.filepath}"
+
+        function_reports = "\n".join([f"  {function}" for function in self.functions])
+        return f"❌ {self.filepath}:\n{function_reports}"

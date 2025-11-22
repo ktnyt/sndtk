@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'if [[ \"$CLAUDE_TOOL_INPUT\" == *.py ]]; then cd \"$CLAUDE_PROJECT_DIR\" && uv run ruff check --fix \"$CLAUDE_TOOL_INPUT\" && uv run mypy \"$CLAUDE_TOOL_INPUT\" || true; fi'",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
