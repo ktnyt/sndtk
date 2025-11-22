@@ -1,25 +1,18 @@
 {
   "hooks": {
-    "PostToolUse": [
+    "afterFileEdit": [
       {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash -c 'if [[ \"$CLAUDE_TOOL_INPUT\" == *.py ]]; then cd \"$CLAUDE_PROJECT_DIR\" && uv run ruff check --fix \"$CLAUDE_TOOL_INPUT\" && uv run mypy \"$CLAUDE_TOOL_INPUT\" || true; fi'",
-            "timeout": 30
-          }
-        ]
-      },
+        "command": "./scripts/after_file_edit.sh"
+      }
+    ],
+    "afterShellExecution": [
       {
-        "matcher": "Shell(git add:*)",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "cat .cursor/rules/commit.md",
-            "timeout": 5
-          }
-        ]
+        "command": "./scripts/after_shell_execution.sh"
+      }
+    ],
+    "stop": [
+      {
+        "command": "basename $(pwd) | xargs -I{} osascript -e 'display notification \"{} 作業完了\" sound name \"Crystal\"'"
       }
     ]
   }
