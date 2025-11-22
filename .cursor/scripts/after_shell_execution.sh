@@ -12,7 +12,7 @@ else
 fi
 
 # git add コマンドかチェック
-if [[ "$command" == *git\ add* ]]; then
-    cat .cursor/rules/commit.md
-fi
+# if [[ "$command" == *git\ add* ]]; then
+#     cat .cursor/rules/commit.md
+# fi
 
