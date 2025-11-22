@@ -19,7 +19,7 @@ class FileSpec(BaseModel):
 
     @classmethod
     def create(cls, filepath: Path, function: Function) -> FileSpec:
-        testpath = filepath.with_suffix("_test.py")
+        testpath = filepath.parent / (filepath.stem + "_test.py")
         spec = cls(filepath=filepath, testpath=testpath, functions=[])
         spec.add(function)
         return spec
@@ -43,7 +43,7 @@ class FileSpec(BaseModel):
 
     @classmethod
     def load(cls, filepath: Path) -> FileSpec:
-        spec_path = filepath.with_suffix("_spec.json")
+        spec_path = filepath.parent / (filepath.stem + "_spec.json")
         logger.debug(f"Loading spec from {spec_path}")
         with open(spec_path, "rb") as f:
             content = json.load(f)
@@ -52,7 +52,8 @@ class FileSpec(BaseModel):
             return spec
 
     def save(self) -> Path:
-        spec_path = self.filepath.with_suffix("_spec.json")
+        filepath = Path(self.filepath)
+        spec_path = filepath.parent / (filepath.stem + "_spec.json")
         logger.info(f"Saving spec to {spec_path}")
         logger.debug(f"Spec contains {len(self.functions)} functions")
         with open(spec_path, "w") as f:
