@@ -73,6 +73,26 @@
           "description": "Processes all reports correctly when first is False"
         },
         {
+          "testname": "test__main__returns_exit_code_zero_when_first_is_false_and_no_uncovered_functions",
+          "description": "Returns exit code 0 when first is False and no uncovered functions found (boundary value)"
+        },
+        {
+          "testname": "test__main__returns_exit_code_one_when_first_is_false_and_uncovered_functions_exist",
+          "description": "Returns exit code 1 when first is False and uncovered functions exist"
+        },
+        {
+          "testname": "test__main__returns_exit_code_one_when_first_is_true_and_create_is_false_and_uncovered_found",
+          "description": "Returns exit code 1 when first is True, create is False, and uncovered function found"
+        },
+        {
+          "testname": "test__main__returns_exit_code_zero_when_first_is_true_and_create_is_true_and_uncovered_found",
+          "description": "Returns exit code 0 when first is True, create is True, and uncovered function found"
+        },
+        {
+          "testname": "test__main__returns_exit_code_zero_when_first_is_true_and_no_uncovered_functions",
+          "description": "Returns exit code 0 when first is True and no uncovered functions found (boundary value)"
+        },
+        {
           "testname": "test__main__returns_first_uncovered_when_first_is_true_and_create_is_false",
           "description": "Returns first uncovered function correctly when first is True and create is False"
         },
@@ -87,6 +107,14 @@
         {
           "testname": "test__main__logs_message_when_first_is_true_and_no_uncovered_functions",
           "description": "Logs message correctly when first is True and no uncovered functions found (boundary value)"
+        },
+        {
+          "testname": "test__main__processes_reports_with_identifier_when_first_is_false",
+          "description": "Processes reports correctly with identifier when first is False"
+        },
+        {
+          "testname": "test__main__returns_first_uncovered_with_identifier_when_first_is_true_and_create_is_false",
+          "description": "Returns first uncovered function correctly with identifier when first is True and create is False"
         }
       ]
     },

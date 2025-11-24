@@ -90,12 +90,28 @@
           "description": "Returns zero when all functions are covered"
         },
         {
+          "testname": "test__FileReport__uncovered_count__returns_one_when_single_uncovered",
+          "description": "Returns one when single function is uncovered (boundary value)"
+        },
+        {
           "testname": "test__FileReport__uncovered_count__returns_count_when_some_uncovered",
           "description": "Returns correct count when some functions are uncovered"
         },
         {
           "testname": "test__FileReport__uncovered_count__returns_count_when_all_uncovered",
           "description": "Returns correct count when all functions are uncovered (boundary value)"
+        },
+        {
+          "testname": "test__FileReport__uncovered_count__returns_count_for_target_function_when_target_is_specified",
+          "description": "Returns correct count for target function when target is specified"
+        },
+        {
+          "testname": "test__FileReport__uncovered_count__returns_zero_for_target_function_when_target_is_covered",
+          "description": "Returns zero for target function when target is covered"
+        },
+        {
+          "testname": "test__FileReport__uncovered_count__returns_zero_when_target_function_does_not_exist",
+          "description": "Returns zero when target function does not exist (boundary value)"
         }
       ]
     }

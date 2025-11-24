@@ -206,7 +206,7 @@ def test__FileReport__uncovered_count__returns_zero_when_empty() -> None:
     """Returns zero when functions list is empty (boundary value)."""
     filepath = Path("test.py")
     report = FileReport(filepath=filepath, filespec=None, functions=[])
-    assert report.uncovered_count == 0
+    assert report.uncovered_count() == 0
 
 
 def test__FileReport__uncovered_count__returns_zero_when_all_covered() -> None:
@@ -235,7 +235,36 @@ def test__FileReport__uncovered_count__returns_zero_when_all_covered() -> None:
     report = FileReport(
         filepath=filepath, filespec=None, functions=[covered_report1, covered_report2]
     )
-    assert report.uncovered_count == 0
+    assert report.uncovered_count() == 0
+
+
+def test__FileReport__uncovered_count__returns_one_when_single_uncovered() -> None:
+    """Returns one when single function is uncovered (boundary value)."""
+    filepath = Path("test.py")
+    function1 = Function(
+        filepath=filepath,
+        name="function1",
+        line=1,
+        column=0,
+        identifier="function1",
+    )
+    function2 = Function(
+        filepath=filepath,
+        name="function2",
+        line=5,
+        column=0,
+        identifier="function2",
+    )
+    covered_report = FunctionReport(
+        function=function1, scenarios=[ScenarioReport(testname="test1", reason=None)]
+    )
+    uncovered_report = FunctionReport(function=function2, scenarios=[])
+    report = FileReport(
+        filepath=filepath,
+        filespec=None,
+        functions=[covered_report, uncovered_report],
+    )
+    assert report.uncovered_count() == 1
 
 
 def test__FileReport__uncovered_count__returns_count_when_some_uncovered() -> None:
@@ -272,7 +301,7 @@ def test__FileReport__uncovered_count__returns_count_when_some_uncovered() -> No
         filespec=None,
         functions=[covered_report, uncovered_report1, uncovered_report2],
     )
-    assert report.uncovered_count == 2
+    assert report.uncovered_count() == 2
 
 
 def test__FileReport__uncovered_count__returns_count_when_all_uncovered() -> None:
@@ -299,7 +328,95 @@ def test__FileReport__uncovered_count__returns_count_when_all_uncovered() -> Non
         filespec=None,
         functions=[uncovered_report1, uncovered_report2],
     )
-    assert report.uncovered_count == 2
+    assert report.uncovered_count() == 2
+
+
+def test__FileReport__uncovered_count__returns_count_for_target_function_when_target_is_specified() -> (
+    None
+):
+    """Returns correct count for target function when target is specified."""
+    filepath = Path("test.py")
+    function1 = Function(
+        filepath=filepath,
+        name="function1",
+        line=1,
+        column=0,
+        identifier="function1",
+    )
+    function2 = Function(
+        filepath=filepath,
+        name="function2",
+        line=5,
+        column=0,
+        identifier="function2",
+    )
+    function3 = Function(
+        filepath=filepath,
+        name="function3",
+        line=10,
+        column=0,
+        identifier="function3",
+    )
+    covered_report = FunctionReport(
+        function=function1, scenarios=[ScenarioReport(testname="test1", reason=None)]
+    )
+    uncovered_report1 = FunctionReport(function=function2, scenarios=[])
+    uncovered_report2 = FunctionReport(function=function3, scenarios=[])
+    report = FileReport(
+        filepath=filepath,
+        filespec=None,
+        functions=[covered_report, uncovered_report1, uncovered_report2],
+    )
+    target = Identifier(filepath=filepath, function_identifier="function2")
+    assert report.uncovered_count(target) == 1
+
+
+def test__FileReport__uncovered_count__returns_zero_for_target_function_when_target_is_covered() -> (
+    None
+):
+    """Returns zero for target function when target is covered."""
+    filepath = Path("test.py")
+    function1 = Function(
+        filepath=filepath,
+        name="function1",
+        line=1,
+        column=0,
+        identifier="function1",
+    )
+    function2 = Function(
+        filepath=filepath,
+        name="function2",
+        line=5,
+        column=0,
+        identifier="function2",
+    )
+    covered_report1 = FunctionReport(
+        function=function1, scenarios=[ScenarioReport(testname="test1", reason=None)]
+    )
+    covered_report2 = FunctionReport(
+        function=function2, scenarios=[ScenarioReport(testname="test2", reason=None)]
+    )
+    report = FileReport(
+        filepath=filepath, filespec=None, functions=[covered_report1, covered_report2]
+    )
+    target = Identifier(filepath=filepath, function_identifier="function1")
+    assert report.uncovered_count(target) == 0
+
+
+def test__FileReport__uncovered_count__returns_zero_when_target_function_does_not_exist() -> None:
+    """Returns zero when target function does not exist (boundary value)."""
+    filepath = Path("test.py")
+    function1 = Function(
+        filepath=filepath,
+        name="function1",
+        line=1,
+        column=0,
+        identifier="function1",
+    )
+    uncovered_report = FunctionReport(function=function1, scenarios=[])
+    report = FileReport(filepath=filepath, filespec=None, functions=[uncovered_report])
+    target = Identifier(filepath=filepath, function_identifier="nonexistent_function")
+    assert report.uncovered_count(target) == 0
 
 
 def test__FileReport____str____returns_emoji_when_empty() -> None:

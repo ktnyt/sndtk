@@ -163,6 +163,56 @@ def test__main__processes_reports_when_first_is_false() -> None:
             assert len(output) > 0
 
 
+def test__main__returns_exit_code_zero_when_first_is_false_and_no_uncovered_functions() -> None:
+    """Returns exit code 0 when first is False and no uncovered functions found (boundary value)."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        test_test_file = path / "test_test.py"
+        test_test_file.write_text("def test__test_function__scenario0():\n    pass\n")
+        spec_file = path / "test_spec.json"
+        import json
+
+        spec_data = {
+            "filepath": str(test_file),
+            "testpath": str(test_test_file),
+            "functions": [
+                {
+                    "testpath": None,
+                    "identifier": "test_function",
+                    "scenarios": [
+                        {
+                            "testpath": None,
+                            "testname": "test__test_function__scenario0",
+                            "description": "Test scenario",
+                        }
+                    ],
+                }
+            ],
+        }
+        with open(spec_file, "w") as f:
+            json.dump(spec_data, f)
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=False, create=False, identifier=None)
+            assert result == 0
+
+
+def test__main__returns_exit_code_one_when_first_is_false_and_uncovered_functions_exist() -> None:
+    """Returns exit code 1 when first is False and uncovered functions exist."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=False, create=False, identifier=None)
+            assert result == 1
+
+
 def test__main__returns_first_uncovered_when_first_is_true_and_create_is_false() -> None:
     """Returns first uncovered function correctly when first is True and create is False."""
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -172,9 +222,25 @@ def test__main__returns_first_uncovered_when_first_is_true_and_create_is_false()
         test_file = path / "test.py"
         test_file.write_text("def test_function():\n    pass\n")
         with patch("sys.stdout", new=StringIO()) as mock_stdout:
-            main(path, first=True, create=False, identifier=None)
+            result = main(path, first=True, create=False, identifier=None)
             output = mock_stdout.getvalue()
             assert len(output) > 0
+            assert result == 1
+
+
+def test__main__returns_exit_code_one_when_first_is_true_and_create_is_false_and_uncovered_found() -> (
+    None
+):
+    """Returns exit code 1 when first is True, create is False, and uncovered function found."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=True, create=False, identifier=None)
+            assert result == 1
 
 
 def test__main__creates_spec_when_first_is_true_and_create_is_true_and_filespec_is_none() -> None:
@@ -191,6 +257,21 @@ def test__main__creates_spec_when_first_is_true_and_create_is_true_and_filespec_
             assert "Created spec" in output
             spec_file = path / "test_spec.json"
             assert spec_file.exists()
+
+
+def test__main__returns_exit_code_zero_when_first_is_true_and_create_is_true_and_uncovered_found() -> (
+    None
+):
+    """Returns exit code 0 when first is True, create is True, and uncovered function found."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=True, create=True, identifier=None)
+            assert result == 0
 
 
 def test__main__adds_to_existing_spec_when_first_is_true_and_create_is_true_and_filespec_exists() -> (
@@ -274,6 +355,81 @@ def test__main__logs_message_when_first_is_true_and_no_uncovered_functions() -> 
             main(path, first=True, create=False, identifier=None)
             output = mock_stdout.getvalue()
             assert len(output) == 0
+
+
+def test__main__returns_exit_code_zero_when_first_is_true_and_no_uncovered_functions() -> None:
+    """Returns exit code 0 when first is True and no uncovered functions found (boundary value)."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        test_test_file = path / "test_test.py"
+        test_test_file.write_text("def test__test_function__scenario0():\n    pass\n")
+        spec_file = path / "test_spec.json"
+        import json
+
+        spec_data = {
+            "filepath": str(test_file),
+            "testpath": str(test_test_file),
+            "functions": [
+                {
+                    "testpath": None,
+                    "identifier": "test_function",
+                    "scenarios": [
+                        {
+                            "testpath": None,
+                            "testname": "test__test_function__scenario0",
+                            "description": "Test scenario",
+                        }
+                    ],
+                }
+            ],
+        }
+        with open(spec_file, "w") as f:
+            json.dump(spec_data, f)
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=True, create=False, identifier=None)
+            assert result == 0
+
+
+def test__main__processes_reports_with_identifier_when_first_is_false() -> None:
+    """Processes reports correctly with identifier when first is False."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text(
+            "def test_function():\n    pass\n\ndef another_function():\n    pass\n"
+        )
+        identifier = Identifier(filepath=test_file, function_identifier="test_function")
+        with patch("sys.stdout", new=StringIO()) as mock_stdout:
+            main(path, first=False, create=False, identifier=identifier)
+            output = mock_stdout.getvalue()
+            assert len(output) > 0
+            assert "test_function" in output or "test.py" in output
+
+
+def test__main__returns_first_uncovered_with_identifier_when_first_is_true_and_create_is_false() -> (
+    None
+):
+    """Returns first uncovered function correctly with identifier when first is True and create is False."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text(
+            "def test_function():\n    pass\n\ndef another_function():\n    pass\n"
+        )
+        identifier = Identifier(filepath=test_file, function_identifier="test_function")
+        with patch("sys.stdout", new=StringIO()) as mock_stdout:
+            result = main(path, first=True, create=False, identifier=identifier)
+            output = mock_stdout.getvalue()
+            assert len(output) > 0
+            assert result == 1
 
 
 def test__cli__calls_main_successfully_with_default_arguments() -> None:

@@ -100,7 +100,7 @@ def main(
                             functions=[function_report],
                         )
                     )
-                    uncovered_count += 1
+                    return 1
 
                 logger.info(f"Creating spec for {function_report.function.identifier}")
                 if report.filespec is None:
@@ -113,14 +113,14 @@ def main(
                 return 0
         else:
             logger.info(f"Report for {report.filepath}: {report}")
-            uncovered_count += report.uncovered_count
+            uncovered_count += report.uncovered_count(identifier)
             print(report)
 
     if first:
         logger.info("No uncovered functions found")
         return 0
 
-    return max(1, uncovered_count)
+    return 0 if uncovered_count == 0 else 1
 
 
 def cli() -> int:
