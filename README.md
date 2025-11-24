@@ -119,9 +119,10 @@ Test specifications are stored in JSON files (e.g., `module_spec.json`):
 
 ## Requirements
 
-- Python >= 3.14
+- Python >= 3.11
 - pathspec >= 0.12.1
 - pydantic >= 2.12.4
+- tomli >= 2.0.1
 
 ## Development
 

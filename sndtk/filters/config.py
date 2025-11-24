@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import fnmatch
 import logging
-import tomllib
 from pathlib import Path
+
+import tomli
 
 from .types import FileFilter
 
@@ -22,7 +23,7 @@ class ConfigFilter(FileFilter):
         try:
             logger.debug(f"Loading config from {self.pyproject_path}")
             with open(self.pyproject_path, "rb") as f:
-                data = tomllib.load(f)
+                data = tomli.load(f)
 
             # [tool.sndtk.exclude] を取得
             tool_config = data.get("tool", {})
@@ -33,7 +34,7 @@ class ConfigFilter(FileFilter):
 
             logger.debug(f"Loaded {len(self.exclude_patterns)} exclude patterns")
 
-        except (tomllib.TOMLDecodeError, OSError, TypeError) as e:
+        except (tomli.TOMLDecodeError, OSError, TypeError) as e:
             logger.error(f"Failed to load exclude patterns: {e}", exc_info=True)
             raise ValueError("Failed to load exclude patterns") from e
 

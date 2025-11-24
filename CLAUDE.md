@@ -34,7 +34,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Notes
 
-- **Python Version**: Requires Python 3.14+
+- **Python Version**: Requires Python 3.11+
 - **Package Manager**: Uses `uv` for fast, reliable dependency management
 - **Tool Management**: Uses `mise` to manage tool versions
 - **Type Checking**: MyPy is configured for type safety
