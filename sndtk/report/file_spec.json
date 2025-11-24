@@ -77,6 +77,27 @@
           "description": "Returns cross string with function reports when uncovered"
         }
       ]
+    },
+    {
+      "identifier": "FileReport::uncovered_count",
+      "scenarios": [
+        {
+          "testname": "test__FileReport__uncovered_count__returns_zero_when_empty",
+          "description": "Returns zero when functions list is empty (boundary value)"
+        },
+        {
+          "testname": "test__FileReport__uncovered_count__returns_zero_when_all_covered",
+          "description": "Returns zero when all functions are covered"
+        },
+        {
+          "testname": "test__FileReport__uncovered_count__returns_count_when_some_uncovered",
+          "description": "Returns correct count when some functions are uncovered"
+        },
+        {
+          "testname": "test__FileReport__uncovered_count__returns_count_when_all_uncovered",
+          "description": "Returns correct count when all functions are uncovered (boundary value)"
+        }
+      ]
     }
   ]
 }

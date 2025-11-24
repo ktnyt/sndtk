@@ -89,6 +89,31 @@
           "description": "Logs message correctly when first is True and no uncovered functions found (boundary value)"
         }
       ]
+    },
+    {
+      "identifier": "cli",
+      "scenarios": [
+        {
+          "testname": "test__cli__calls_main_successfully_with_default_arguments",
+          "description": "Calls main successfully with default arguments"
+        },
+        {
+          "testname": "test__cli__calls_main_correctly_with_custom_root_path",
+          "description": "Calls main correctly with custom root path"
+        },
+        {
+          "testname": "test__cli__calls_main_correctly_with_create_and_first_flags",
+          "description": "Calls main correctly with create and first flags"
+        },
+        {
+          "testname": "test__cli__calls_main_correctly_with_target_identifier",
+          "description": "Calls main correctly with target identifier"
+        },
+        {
+          "testname": "test__cli__calls_setup_logging_correctly_with_verbose_count",
+          "description": "Calls setup_logging correctly with verbose count"
+        }
+      ]
     }
   ]
 }

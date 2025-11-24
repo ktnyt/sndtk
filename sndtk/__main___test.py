@@ -6,7 +6,7 @@ from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
 
-from sndtk.__main__ import generate_reports, main, setup_logging, walk
+from sndtk.__main__ import cli, generate_reports, main, setup_logging, walk
 from sndtk.spec.types import Identifier
 
 
@@ -274,3 +274,88 @@ def test__main__logs_message_when_first_is_true_and_no_uncovered_functions() -> 
             main(path, first=True, create=False, identifier=None)
             output = mock_stdout.getvalue()
             assert len(output) == 0
+
+
+def test__cli__calls_main_successfully_with_default_arguments() -> None:
+    """Calls main successfully with default arguments."""
+    with (
+        patch("sys.argv", ["sndtk"]),
+        patch("sndtk.__main__.main") as mock_main,
+        patch("sndtk.__main__.setup_logging") as mock_setup_logging,
+    ):
+        mock_main.return_value = 0
+        result = cli()
+        mock_setup_logging.assert_called_once_with(0)
+        mock_main.assert_called_once_with(
+            root=Path("."), create=False, first=False, identifier=None
+        )
+        assert result == 0
+
+
+def test__cli__calls_main_correctly_with_custom_root_path() -> None:
+    """Calls main correctly with custom root path."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        with (
+            patch("sys.argv", ["sndtk", "--root", tmpdir]),
+            patch("sndtk.__main__.main") as mock_main,
+            patch("sndtk.__main__.setup_logging") as mock_setup_logging,
+        ):
+            mock_main.return_value = 0
+            result = cli()
+            mock_setup_logging.assert_called_once_with(0)
+            mock_main.assert_called_once_with(
+                root=Path(tmpdir), create=False, first=False, identifier=None
+            )
+            assert result == 0
+
+
+def test__cli__calls_main_correctly_with_create_and_first_flags() -> None:
+    """Calls main correctly with create and first flags."""
+    with (
+        patch("sys.argv", ["sndtk", "--create", "--first"]),
+        patch("sndtk.__main__.main") as mock_main,
+        patch("sndtk.__main__.setup_logging") as mock_setup_logging,
+    ):
+        mock_main.return_value = 0
+        result = cli()
+        mock_setup_logging.assert_called_once_with(0)
+        mock_main.assert_called_once_with(root=Path("."), create=True, first=True, identifier=None)
+        assert result == 0
+
+
+def test__cli__calls_main_correctly_with_target_identifier() -> None:
+    """Calls main correctly with target identifier."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        test_file = Path(tmpdir) / "test.py"
+        test_file.touch()
+        with (
+            patch("sys.argv", ["sndtk", "--target", f"{test_file}::test_function"]),
+            patch("sndtk.__main__.main") as mock_main,
+            patch("sndtk.__main__.setup_logging") as mock_setup_logging,
+        ):
+            mock_main.return_value = 0
+            result = cli()
+            mock_setup_logging.assert_called_once_with(0)
+            mock_main.assert_called_once()
+            call_args = mock_main.call_args
+            assert call_args.kwargs["root"] == Path(".")
+            assert call_args.kwargs["create"] is False
+            assert call_args.kwargs["first"] is False
+            assert call_args.kwargs["identifier"] is not None
+            assert call_args.kwargs["identifier"].filepath == test_file
+            assert call_args.kwargs["identifier"].function_identifier == "test_function"
+            assert result == 0
+
+
+def test__cli__calls_setup_logging_correctly_with_verbose_count() -> None:
+    """Calls setup_logging correctly with verbose count."""
+    with (
+        patch("sys.argv", ["sndtk", "-vv"]),
+        patch("sndtk.__main__.main") as mock_main,
+        patch("sndtk.__main__.setup_logging") as mock_setup_logging,
+    ):
+        mock_main.return_value = 0
+        result = cli()
+        mock_setup_logging.assert_called_once_with(2)
+        mock_main.assert_called_once()
+        assert result == 0

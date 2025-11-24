@@ -56,6 +56,10 @@ class FileReport:
             return True
         return all(function.covered for function in self.functions)
 
+    @property
+    def uncovered_count(self) -> int:
+        return len([function for function in self.functions if not function.covered])
+
     def __str__(self) -> str:
         if len(self.functions) == 0:
             return f"🪽 {self.filepath}"

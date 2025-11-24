@@ -76,11 +76,13 @@ def main(
     create: bool = False,
     first: bool = False,
     identifier: Identifier | None = None,
-) -> None:
+) -> int:
     logger = logging.getLogger(__name__)
     if create:
         assert first, "Create one function spec at a time to avoid task explosion"
         logger.info("Create mode enabled")
+
+    uncovered_count = 0
 
     reports = generate_reports(root, identifier)
     for report in reports:
@@ -98,7 +100,7 @@ def main(
                             functions=[function_report],
                         )
                     )
-                    return
+                    uncovered_count += 1
 
                 logger.info(f"Creating spec for {function_report.function.identifier}")
                 if report.filespec is None:
@@ -108,17 +110,20 @@ def main(
 
                 specpath = filespec.save()
                 print(f"Created spec for {function_report.function.identifier} in {specpath}")
-                return
+                return 0
         else:
             logger.info(f"Report for {report.filepath}: {report}")
+            uncovered_count += report.uncovered_count
             print(report)
 
     if first:
         logger.info("No uncovered functions found")
-        return
+        return 0
+
+    return max(1, uncovered_count)
 
 
-def cli() -> None:
+def cli() -> int:
     """Command-line interface entry point."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path("."))
@@ -131,7 +136,7 @@ def cli() -> None:
 
     setup_logging(args.verbose)
 
-    main(
+    return main(
         root=args.root,
         create=args.create,
         first=args.first,
@@ -140,4 +145,4 @@ def cli() -> None:
 
 
 if __name__ == "__main__":
-    cli()
+    exit(cli())
