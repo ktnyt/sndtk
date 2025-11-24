@@ -21,8 +21,8 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           version: "latest"
-      - name: Create environment
-        run: uv venv --python 3.11
+      - name: Install project dependencies
+        run: uv sync
       - name: Install build dependencies
         run: uv pip install build twine
       - name: Build package
