@@ -118,7 +118,8 @@ def main(
         return
 
 
-if __name__ == "__main__":
+def cli() -> None:
+    """Command-line interface entry point."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path("."))
     parser.add_argument("--create", action="store_true")
@@ -136,3 +137,7 @@ if __name__ == "__main__":
         first=args.first,
         identifier=Identifier.from_string(args.target) if args.target else None,
     )
+
+
+if __name__ == "__main__":
+    cli()

@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = ["pathspec>=0.12.1", "pydantic>=2.12.4"]
 
+[project.scripts]
+sndtk = "sndtk.__main__:cli"
+
 [dependency-groups]
 dev = [
     "mypy>=1.18.2",
