@@ -23,7 +23,7 @@ class ScenarioReport:
 
         parser = PythonParser()
         for function in parser.parse(testpath):
-            if function.identifier == scenario.testname:
+            if function.name == scenario.testname:
                 return cls(
                     testname=scenario.testname,
                     reason=None,
