@@ -1,6 +1,14 @@
 # Retesting
 
+## Rules
+
+- ALWAYS analyze the changes and update the specs BEFORE fixing the tests.
+- ALWAYS work with one logic change at a time.
+- Create a temporary file to keep track of changed functions if multiple files are changed.
+
 ## Tasks
+
+ADD THE FOLLOWING TASKS AS=IS TO THE TO-DO LIST BEFORE DOING ANYTHING
 
 - Run `git status` and `git diff` to find edited files.
 - Identify areas of edited files where there are changes in logic.
@@ -11,6 +19,7 @@
   - If a function is not specified in the test spec JSON file (including new functions), skip handling the function.
 - Devise of a plan to modify the tests.
 - Assess the risks of degradation and notify user if there are any potentially hazardous changes.
+- Check for new test scenarios and any potential edge cases that are not covered by existing specs.
 - Update the test spec JSON to match the modification plan.
 - Modify the tests if everything is clear.
 - Run `uv run mypy`, `uv run ruff check --fix --unsafe-fixes` and `uv run ruff format` on the test file.

@@ -8,6 +8,7 @@
 - Use cclsp:find_definition MCP tool on the target function implementation to understand the target function logic.
 - Use cclsp:find_references MCP tool to find and understand the context of the target function usage.
 - Identify essential test scenarios with boundary value analysis. DO NOT INCLUDE SCENARIOS THAT ASSUME INCORRECT ARGUMENT/RETURN TYPES.
+- Double check to be absolutely certain that all edge cases are considered in the test.
 - Overwrite the scenario defaults.
 - Implement the test scenarios.
 - Run `uv run mypy`, `uv run ruff check --fix --unsafe-fixes` and `uv run ruff format` on the test file.
