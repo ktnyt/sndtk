@@ -13,7 +13,15 @@ def test__handle_function__yields_function_with_empty_context() -> None:
     context: list[str] = []
     node = ast.FunctionDef(
         name="test_function",
-        args=ast.arguments(),
+        args=ast.arguments(
+            posonlyargs=[],
+            args=[],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+        ),
         body=[],
         decorator_list=[],
         lineno=1,
@@ -34,7 +42,15 @@ def test__handle_function__yields_function_with_context() -> None:
     context = ["MyClass"]
     node = ast.FunctionDef(
         name="test_method",
-        args=ast.arguments(),
+        args=ast.arguments(
+            posonlyargs=[],
+            args=[],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+        ),
         body=[],
         decorator_list=[],
         lineno=5,
@@ -55,7 +71,15 @@ def test__handle_function__processes_nested_functions() -> None:
     context: list[str] = []
     inner_node = ast.FunctionDef(
         name="inner_function",
-        args=ast.arguments(),
+        args=ast.arguments(
+            posonlyargs=[],
+            args=[],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+        ),
         body=[],
         decorator_list=[],
         lineno=3,
@@ -63,7 +87,15 @@ def test__handle_function__processes_nested_functions() -> None:
     )
     outer_node = ast.FunctionDef(
         name="outer_function",
-        args=ast.arguments(),
+        args=ast.arguments(
+            posonlyargs=[],
+            args=[],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+        ),
         body=[inner_node],
         decorator_list=[],
         lineno=1,
@@ -82,7 +114,15 @@ def test__search__processes_function_def_node() -> None:
     filepath = Path("test.py")
     node = ast.FunctionDef(
         name="test_function",
-        args=ast.arguments(),
+        args=ast.arguments(
+            posonlyargs=[],
+            args=[],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+        ),
         body=[],
         decorator_list=[],
         lineno=1,
@@ -99,7 +139,15 @@ def test__search__processes_class_def_node() -> None:
     filepath = Path("test.py")
     function_node = ast.FunctionDef(
         name="test_method",
-        args=ast.arguments(),
+        args=ast.arguments(
+            posonlyargs=[],
+            args=[],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+        ),
         body=[],
         decorator_list=[],
         lineno=2,
@@ -134,7 +182,15 @@ def test__search__processes_with_empty_context() -> None:
     context: list[str] = []
     node = ast.FunctionDef(
         name="test_function",
-        args=ast.arguments(),
+        args=ast.arguments(
+            posonlyargs=[],
+            args=[],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[],
+        ),
         body=[],
         decorator_list=[],
         lineno=1,
