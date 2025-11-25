@@ -515,3 +515,167 @@ def test__cli__calls_setup_logging_correctly_with_verbose_count() -> None:
         mock_setup_logging.assert_called_once_with(2)
         mock_main.assert_called_once()
         assert result == 0
+
+
+def test__main__creates_spec_when_create_is_true_and_target_is_specified() -> None:
+    """Creates spec correctly when create is True and target is specified without first."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        identifier = Identifier(filepath=test_file, function_identifier="test_function")
+        with patch("sys.stdout", new=StringIO()) as mock_stdout:
+            main(path, first=False, create=True, identifier=identifier)
+            output = mock_stdout.getvalue()
+            assert "Created spec" in output
+            spec_file = path / "test_spec.json"
+            assert spec_file.exists()
+
+
+def test__main__returns_exit_code_zero_when_create_is_true_and_target_is_specified() -> None:
+    """Returns exit code 0 when create is True and target is specified without first."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        identifier = Identifier(filepath=test_file, function_identifier="test_function")
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=False, create=True, identifier=identifier)
+            assert result == 0
+
+
+def test__main__adds_to_existing_spec_when_create_is_true_and_target_is_specified() -> None:
+    """Adds to existing spec correctly when create is True and target is specified without first."""
+    import json
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text(
+            "def test_function():\n    pass\n\ndef another_function():\n    pass\n"
+        )
+        spec_file = path / "test_spec.json"
+        spec_data = {
+            "filepath": str(test_file),
+            "testpath": str(path / "test_test.py"),
+            "functions": [
+                {
+                    "testpath": None,
+                    "identifier": "test_function",
+                    "scenarios": [
+                        {
+                            "testpath": None,
+                            "testname": "test__test_function__scenario0",
+                            "description": "Test scenario",
+                        }
+                    ],
+                }
+            ],
+        }
+        with open(spec_file, "w") as f:
+            json.dump(spec_data, f)
+        test_test_file = path / "test_test.py"
+        test_test_file.write_text("def test__test_function__scenario0():\n    pass\n")
+        identifier = Identifier(filepath=test_file, function_identifier="another_function")
+        with patch("sys.stdout", new=StringIO()) as mock_stdout:
+            main(path, first=False, create=True, identifier=identifier)
+            output = mock_stdout.getvalue()
+            assert "Created spec" in output
+            with open(spec_file) as f:
+                updated_spec = json.load(f)
+            assert len(updated_spec["functions"]) == 2
+
+
+def test__main__returns_exit_code_zero_when_target_function_is_already_covered() -> None:
+    """Returns exit code 0 when target function is already covered."""
+    import json
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        test_test_file = path / "test_test.py"
+        test_test_file.write_text("def test__test_function__scenario0():\n    pass\n")
+        spec_file = path / "test_spec.json"
+        spec_data = {
+            "filepath": str(test_file),
+            "testpath": str(test_test_file),
+            "functions": [
+                {
+                    "testpath": None,
+                    "identifier": "test_function",
+                    "scenarios": [
+                        {
+                            "testpath": None,
+                            "testname": "test__test_function__scenario0",
+                            "description": "Test scenario",
+                        }
+                    ],
+                }
+            ],
+        }
+        with open(spec_file, "w") as f:
+            json.dump(spec_data, f)
+        identifier = Identifier(filepath=test_file, function_identifier="test_function")
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=False, create=True, identifier=identifier)
+            assert result == 0
+
+
+def test__main__returns_exit_code_one_when_target_function_not_found() -> None:
+    """Returns exit code 1 when target function is not found."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        identifier = Identifier(filepath=test_file, function_identifier="nonexistent_function")
+        with patch("sys.stdout", new=StringIO()):
+            result = main(path, first=False, create=True, identifier=identifier)
+            assert result == 1
+
+
+def test__main__raises_assertion_error_when_create_is_true_and_first_is_false_and_no_target() -> (
+    None
+):
+    """Raises AssertionError when create is True, first is False, and no target is specified."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        with patch("sys.stdout", new=StringIO()):
+            try:
+                main(path, first=False, create=True, identifier=None)
+                raise AssertionError("Expected AssertionError")
+            except AssertionError as e:
+                assert "Create one function spec at a time" in str(e)
+
+
+def test__main__raises_assertion_error_when_create_is_true_and_first_is_false_and_target_has_empty_function_identifier() -> (
+    None
+):
+    """Raises AssertionError when create is True, first is False, and target has empty function_identifier."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir)
+        pyproject_toml = path / "pyproject.toml"
+        pyproject_toml.write_text("[tool.sndtk]\nexclude = []\n")
+        test_file = path / "test.py"
+        test_file.write_text("def test_function():\n    pass\n")
+        identifier = Identifier(filepath=test_file, function_identifier="")
+        with patch("sys.stdout", new=StringIO()):
+            try:
+                main(path, first=False, create=True, identifier=identifier)
+                raise AssertionError("Expected AssertionError")
+            except AssertionError as e:
+                assert "Create one function spec at a time" in str(e)

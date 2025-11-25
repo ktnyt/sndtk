@@ -79,7 +79,11 @@ def main(
 ) -> int:
     logger = logging.getLogger(__name__)
     if create:
-        assert first, "Create one function spec at a time to avoid task explosion"
+        # Allow create without first if a specific function is targeted
+        has_specific_target = identifier is not None and identifier.function_identifier != ""
+        assert first or has_specific_target, (
+            "Create one function spec at a time to avoid task explosion"
+        )
         logger.info("Create mode enabled")
 
     uncovered_count = 0
@@ -111,6 +115,37 @@ def main(
                 specpath = filespec.save()
                 print(f"Created spec for {function_report.function.identifier} in {specpath}")
                 return 0
+        elif create and identifier is not None and identifier.function_identifier != "":
+            # Create mode with specific target function
+            function_report = next(
+                (
+                    fr
+                    for fr in report.functions
+                    if fr.function.identifier == identifier.function_identifier
+                ),
+                None,
+            )
+            if function_report is not None:
+                if not function_report.covered:
+                    logger.info(f"Creating spec for {function_report.function.identifier}")
+                    if report.filespec is None:
+                        filespec = FileSpec.create(report.filepath, function_report.function)
+                    else:
+                        filespec = report.filespec.add(function_report.function)
+
+                    specpath = filespec.save()
+                    print(f"Created spec for {function_report.function.identifier} in {specpath}")
+                    return 0
+                else:
+                    logger.info(
+                        f"Function {function_report.function.identifier} is already covered"
+                    )
+                    return 0
+            else:
+                logger.warning(
+                    f"Function {identifier.function_identifier} not found in {report.filepath}"
+                )
+                return 1
         else:
             logger.info(f"Report for {report.filepath}: {report}")
             uncovered_count += report.uncovered_count(identifier)
