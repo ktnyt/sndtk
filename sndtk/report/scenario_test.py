@@ -58,6 +58,24 @@ def test__ScenarioReport__generate__uses_scenario_testpath_when_provided() -> No
         assert report.reason is None
 
 
+def test__ScenarioReport__generate__returns_report_with_no_reason_when_test_function_is_class_method() -> (
+    None
+):
+    """Returns report with no reason when test function is class method."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        test_file = Path(tmpdir) / "test_file.py"
+        with open(test_file, "w") as f:
+            f.write(
+                "class TestMyClass:\n    def test__method_name__scenario(self):\n        pass\n"
+            )
+        scenario = ScenarioSpec(
+            testpath=None, testname="test__method_name__scenario", description="Test"
+        )
+        report = ScenarioReport.generate(scenario, test_file)
+        assert report.testname == "test__method_name__scenario"
+        assert report.reason is None
+
+
 def test__ScenarioReport____str____returns_checkmark_when_reason_is_none() -> None:
     """Returns checkmark string when reason is None (boundary value)."""
     report = ScenarioReport(testname="test_function", reason=None)

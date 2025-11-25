@@ -20,6 +20,10 @@
         {
           "testname": "test__ScenarioReport__generate__uses_scenario_testpath_when_provided",
           "description": "Uses scenario testpath when provided"
+        },
+        {
+          "testname": "test__ScenarioReport__generate__returns_report_with_no_reason_when_test_function_is_class_method",
+          "description": "Returns report with no reason when test function is class method"
         }
       ]
     },
